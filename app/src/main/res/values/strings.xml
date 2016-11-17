@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Ex4</string>
+    <string name="main_title">Sheep order form</string>
+    <string name="input_ins">Please select num of sheeps:</string>
+    <string name="input_hint_content">Type here...</string>
+    <string name="checkbox_title">With food</string>
+    <string name="button_content">Make order</string>
+    <string name="sent_massage_cont">Your order has been sent!</string>
+    <string name="ordersend_title">OrderSent</string>
+    <string name="menu_button">Send Order</string>
+    <string name="selectfood_title">Select Food</string>
+    <string name="select_button_content">select</string>
+    <string-array name="foods">
+        <item>Banana</item>
+        <item>Mango</item>
+        <item>Melon</item>
+        <item>Dates</item>
+        <item>Cinnamon</item>
+    </string-array>
+    <string-array name="foods_image">
+        <item>Banana</item>
+        <item>Mango</item>
+        <item>Melon</item>
+        <item>Dates</item>
+        <item>Cinnamon</item>
+    </string-array>
+</resources>
