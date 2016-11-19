@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 public class SelectFoodActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.example.nisan.MESSAGE";
-    public final static String EXTRA_INPUTSTATE = "com.example.nisan.INPUTSTATE";
-    public final static String EXTRA_CHECKBOXSTATE = "com.example.nisan.CHECKBOXSTATE";
 
     private String inputbox;
     private Boolean checkbox;
@@ -28,8 +26,6 @@ public class SelectFoodActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_food);
 
         Intent intent = getIntent();
-        inputbox = intent.getStringExtra(MainActivity.EXTRA_INPUTSTATE);
-        checkbox = intent.getBooleanExtra(MainActivity.EXTRA_CHECKBOXSTATE,false);
 
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_id);
         setSupportActionBar(toolBar);

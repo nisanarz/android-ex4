@@ -1,6 +1,7 @@
 package com.example.nisan.ex4;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,6 +27,39 @@ public class MainFragment extends Fragment {
     private Button orderButton;
     private Button selectButton;
     private SeekBar seekBar;
+    public final static int askForFoodType =1;
+    private OnFragmentInteractionListener mCallback;
+
+
+    public interface OnFragmentInteractionListener {
+        public void selectButtonClicked();
+        public void sendOrderClicked();
+        public void checkAndSetMenuButton(Boolean foodCheckbox, Boolean checkEditTextInput);
+    }
+
+
+    public MainFragment() {
+        // Required empty public constructor
+    }
+
+
+    public static MainFragment newInstance(String param1, String param2) {
+        MainFragment fragment = new MainFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mCallback = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -40,22 +74,18 @@ public class MainFragment extends Fragment {
         inputTextHandler();
         seekbarHandler();
         checkBoxHandler();
+        orderButtonHandler();
 
 
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SelectFoodActivity.class);
-                startActivityForResult(intent,askForFoodType);
+                mCallback.selectButtonClicked();
             }
         });
 
 
         return returnView;
-    }
-
-    public interface OnFragmentInteractionListener {
-
     }
 
     private void inputTextHandler(){
@@ -129,33 +159,23 @@ public class MainFragment extends Fragment {
         });
     }
 
-    public void makeOrder(View view){
-        orderButton = (Button) view.findViewById(R.id.button_id);
-        numInputText = (EditText) view.findViewById(R.id.input_id);
-        foodCheckbox = (CheckBox) view.findViewById(R.id.checkbox_id);
-
-        //Toast.makeText(getApplicationContext(),"Order sent",Toast.LENGTH_SHORT).show();
-        orderButton.setEnabled(false);
-        numInputText.setText("");
-        foodCheckbox.setChecked(false);
-
-        Intent intent = new Intent(this, OrderSendActivity.class);
-        startActivity(intent);
-
+    private void orderButtonHandler(){
+        orderButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.sendOrderClicked();
+            }
+        });
     }
 
     private void checkButtonValid(){
         if (foodCheckbox.isChecked() && checkEditTextInput(numInputText)){
+            mCallback.checkAndSetMenuButton(foodCheckbox.isChecked(),checkEditTextInput(numInputText));
             orderButton.setEnabled(true);
-            if (send_order_button != null){
-                send_order_button.setEnabled(true);
-            }
         }
         else {
+            mCallback.checkAndSetMenuButton(foodCheckbox.isChecked(), checkEditTextInput(numInputText));
             orderButton.setEnabled(false);
-            if (send_order_button != null){
-                send_order_button.setEnabled(false);
-            }
         }
     }
 

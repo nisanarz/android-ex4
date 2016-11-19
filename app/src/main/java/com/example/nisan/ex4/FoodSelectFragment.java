@@ -8,6 +8,6 @@ public class FoodSelectFragment {
 
 
     public interface OnFragmentInteractionListener {
-
+        public void itemPicked(int itemPicked);
     }
 }

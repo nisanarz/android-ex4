@@ -2,9 +2,15 @@ package com.example.nisan.ex4;
 
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatCallback;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -18,51 +24,67 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import static android.support.v7.app.AppCompatActivity.*;
+
 public class MainActivity extends AppCompatActivity implements MainFragment.OnFragmentInteractionListener,
         FoodSelectFragment.OnFragmentInteractionListener  {
 
     private Menu menu;
     private MenuItem send_order_button;
+    private MainFragment mainFragment;
+    private FoodSelectFragment foodsSelectFragment;
+
     public final static String EXTRA_MESSAGE = "com.example.nisan.MESSAGE";
-    public final static String EXTRA_INPUTSTATE = "com.example.nisan.INPUTSTATE";
-    public final static String EXTRA_CHECKBOXSTATE = "com.example.nisan.CHECKBOXSTATE";
-    public final static int askForFoodType =1;
+    static final String MAIN_FRAGMENT_TAG = "main_fragment";
+
+
+    @Override
+    public void sendOrderClicked() {
+        Intent intent = new Intent(this, OrderSendActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void selectButtonClicked() {
+//        Bundle args = new Bundle();
+//        foodsSelectFragment = new FoodSelectFragment();
+//        foodsSelectFragment.setArguments(args);
+//
+//        if (findViewById(R.id.fragment_container) != null) { //not tablet
+//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.fragment_container, foodsSelectFragment);
+//            transaction.addToBackStack(null);
+//            transaction.commit();
+//        }
+    }
+
+    @Override
+    public void itemPicked(int itemPicked){
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         Toolbar toolBar = (Toolbar) findViewById(R.id.toolbar_id);
         setSupportActionBar(toolBar);
 
-
-
-//        Intent intent = getIntent();
-//        String message = intent.getStringExtra(SelectFoodActivity.EXTRA_MESSAGE);
-//        String inputValue = intent.getStringExtra(SelectFoodActivity.EXTRA_INPUTSTATE);
-//        Boolean checkboxValue = intent.getBooleanExtra(SelectFoodActivity.EXTRA_CHECKBOXSTATE,false);
-//        intent.removeExtra(EXTRA_MESSAGE);
-//        if (message != null){
-//            Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
-//            message=null;
-//        }
-//        if (inputValue != null){
-//            numInputText.setText(inputValue);
-//        }
-//        if (checkboxValue != null){
-//            foodCheckbox.setChecked(checkboxValue);
-//        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == askForFoodType && resultCode == RESULT_OK && data != null) {
-            Toast.makeText(getApplicationContext(),data.getExtras().getString(EXTRA_MESSAGE)
-                    ,Toast.LENGTH_SHORT).show();
+        if(findViewById(R.id.fragment_container) != null) { //non-tablet layout
+            if (null != savedInstanceState) {
+                return;
+            }
+            mainFragment = new MainFragment();
+            mainFragment.setArguments(getIntent().getExtras());
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, mainFragment).commit();
         }
+        //TODO: implement for tablet
+
     }
+
 
 
 
@@ -73,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         getMenuInflater().inflate(R.menu.menu_item, menu);
         send_order_button = menu.findItem(R.id.send_order_menu_button); //menu.getItem(0);
         send_order_button.setEnabled(false);
-        checkButtonValid();
+        //checkButtonValid();
         return true;
     }
 
@@ -82,12 +104,28 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.send_order_menu_button:
-                makeOrder(item.getActionView());
+                sendOrderClicked();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
+
+    public void checkAndSetMenuButton(Boolean foodCheckbox, Boolean checkEditTextInput){
+        if (foodCheckbox && checkEditTextInput){
+            if (send_order_button != null){
+                send_order_button.setEnabled(true);
+            }
+        }
+        else {
+            if (send_order_button != null){
+                send_order_button.setEnabled(false);
+            }
+        }
+    }
+
 
 
 
