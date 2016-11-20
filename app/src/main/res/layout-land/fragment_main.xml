@@ -27,34 +27,25 @@
             android:layout_height="wrap_content"
             android:text="@string/input_ins" />
 
-        <EditText
-            android:id="@+id/input_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"/>
-
-        <SeekBar
-            android:id="@+id/seek_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="100"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layoutDirection="locale">
+
+            <EditText
+                android:id="@+id/input_id"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:inputType="number"/>
+
             <CheckBox
                 android:id="@+id/checkbox_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/checkbox_title"
                 android:checked="false"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                />
 
             <Button
                 android:id="@+id/select_button_id"
@@ -65,6 +56,13 @@
 
         </LinearLayout>
 
+        <SeekBar
+            android:id="@+id/seek_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="100"/>
+
+
         <Button
             android:id="@+id/button_id"
             android:layout_width="match_parent"
@@ -73,6 +71,5 @@
             android:enabled="false"
             android:textAllCaps="false"/>
     </LinearLayout>
-
 
 </FrameLayout>

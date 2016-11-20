@@ -14,6 +14,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Toast;
+
 
 /**
  * Created by narzoan on 11/19/2016.
@@ -29,6 +31,7 @@ public class MainFragment extends Fragment {
     private SeekBar seekBar;
     public final static int askForFoodType =1;
     private OnFragmentInteractionListener mCallback;
+    private static Context ctx;
 
 
     public interface OnFragmentInteractionListener {
@@ -53,6 +56,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        ctx = context;
         if (context instanceof OnFragmentInteractionListener) {
             mCallback = (OnFragmentInteractionListener) context;
         } else {
@@ -194,6 +198,11 @@ public class MainFragment extends Fragment {
             }
         }
         return flag;
+    }
+
+    public void handleItemPick(String itemPicked){
+        //Toast.makeText(ctx,itemPicked ,Toast.LENGTH_SHORT).show();
+        selectButton.setText(itemPicked);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.nisan.ex4;
 
 import android.content.Intent;
+
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.transition.Transition;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     private FoodSelectFragment foodsSelectFragment;
 
     public final static String EXTRA_MESSAGE = "com.example.nisan.MESSAGE";
-    static final String MAIN_FRAGMENT_TAG = "main_fragment";
 
 
     @Override
@@ -46,21 +47,31 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     @Override
     public void selectButtonClicked() {
-//        Bundle args = new Bundle();
-//        foodsSelectFragment = new FoodSelectFragment();
-//        foodsSelectFragment.setArguments(args);
-//
-//        if (findViewById(R.id.fragment_container) != null) { //not tablet
-//            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.fragment_container, foodsSelectFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        }
+        Bundle args = new Bundle();
+        foodsSelectFragment = new FoodSelectFragment();
+        foodsSelectFragment.setArguments(args);
+
+        if (findViewById(R.id.fragment_container) != null) { //not tablet
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container, foodsSelectFragment).addToBackStack(null).commit();
+        }
     }
 
     @Override
-    public void itemPicked(int itemPicked){
+    public void itemPicked(String itemPicked){
+//        Bundle args = new Bundle();
+//        mainFragment = new MainFragment();
+//        mainFragment.setArguments(args);
+//
+//        if (findViewById(R.id.fragment_container) != null) { //not tablet
+//            getFragmentManager().beginTransaction().replace(R.id.fragment_container, mainFragment).addToBackStack(null).commit();
+//        }
 
+        if (findViewById(R.id.fragment_container) != null) { //not tablet
+            getFragmentManager().popBackStackImmediate();
+
+            MainFragment fragment = (MainFragment) getFragmentManager().findFragmentByTag("main_f");
+            fragment.handleItemPick(itemPicked);
+        }
 
     }
 
@@ -79,15 +90,11 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             }
             mainFragment = new MainFragment();
             mainFragment.setArguments(getIntent().getExtras());
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, mainFragment).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, mainFragment,"main_f").commit();
         }
         //TODO: implement for tablet
 
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
