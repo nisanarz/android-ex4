@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         foodsSelectFragment.setArguments(args);
 
         if (findViewById(R.id.fragment_container) != null) { //not tablet
-            getFragmentManager().beginTransaction().replace(R.id.fragment_container, foodsSelectFragment).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, foodsSelectFragment).addToBackStack(null).commit();
         }
     }
 
@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 //        }
 
         if (findViewById(R.id.fragment_container) != null) { //not tablet
-            getFragmentManager().popBackStackImmediate();
+            getSupportFragmentManager().popBackStackImmediate();
 
-            MainFragment fragment = (MainFragment) getFragmentManager().findFragmentByTag("main_f");
+            MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentByTag("main_f");
             fragment.handleItemPick(itemPicked);
         }
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             }
             mainFragment = new MainFragment();
             mainFragment.setArguments(getIntent().getExtras());
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, mainFragment,"main_f").commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainFragment,"main_f").commit();
         }
         //TODO: implement for tablet
 

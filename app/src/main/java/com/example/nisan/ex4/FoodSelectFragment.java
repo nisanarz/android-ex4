@@ -1,6 +1,7 @@
 package com.example.nisan.ex4;
 
-import android.app.Fragment;
+//import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class FoodSelectFragment extends Fragment {
         public void itemPicked(String itemPicked);
     }
 
-    private FoodSelectFragment.OnFragmentInteractionListener mCallback;
+    private OnFragmentInteractionListener mCallback;
 
     public final static String EXTRA_MESSAGE = "com.example.nisan.MESSAGE";
 
@@ -58,7 +59,7 @@ public class FoodSelectFragment extends Fragment {
 
         values = getResources().getStringArray(R.array.foods);
         listView = (ListView) returnView.findViewById(R.id.listview_id);
-        CustomFruitListAdapter adapter = new CustomFruitListAdapter(returnView.getContext(),values);
+        CustomFruitListAdapter adapter = new CustomFruitListAdapter(getContext(),values);
         listView.setAdapter(adapter);
 
         listViewHandler();
