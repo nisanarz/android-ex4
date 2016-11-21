@@ -76,6 +76,11 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     }
 
     @Override
+    public void changeItemMenu(){
+        send_order_button.setVisible(!send_order_button.isVisible());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

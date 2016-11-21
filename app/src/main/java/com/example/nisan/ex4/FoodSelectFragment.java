@@ -19,6 +19,7 @@ public class FoodSelectFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         public void itemPicked(String itemPicked);
+        public void changeItemMenu();
     }
 
     private OnFragmentInteractionListener mCallback;
@@ -47,10 +48,17 @@ public class FoodSelectFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof FoodSelectFragment.OnFragmentInteractionListener) {
             mCallback = (FoodSelectFragment.OnFragmentInteractionListener) context;
+            mCallback.changeItemMenu();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        mCallback.changeItemMenu();
     }
 
     @Override
