@@ -77,7 +77,10 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     @Override
     public void changeItemMenu(){
-        send_order_button.setVisible(!send_order_button.isVisible());
+        if (send_order_button != null){
+            send_order_button.setVisible(!send_order_button.isVisible());
+        }
+
     }
 
     @Override
@@ -97,8 +100,20 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
             mainFragment.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainFragment,"main_f").commit();
         }
-        //TODO: implement for tablet
+        else {
+            if (null != savedInstanceState) {
+                return;
+            }
+            mainFragment = new MainFragment();
+            foodsSelectFragment = new FoodSelectFragment();
+            FragmentTransaction transaction =
+                    getSupportFragmentManager().beginTransaction();
 
+            transaction.add(R.id.fragment_container1, mainFragment,"main_f");
+            transaction.add(R.id.fragment_container2, foodsSelectFragment);
+
+            transaction.commit();
+        }
     }
 
     @Override
