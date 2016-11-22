@@ -58,17 +58,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     @Override
     public void itemPicked(String itemPicked){
-//        Bundle args = new Bundle();
-//        mainFragment = new MainFragment();
-//        mainFragment.setArguments(args);
-//
-//        if (findViewById(R.id.fragment_container) != null) { //not tablet
-//            getFragmentManager().beginTransaction().replace(R.id.fragment_container, mainFragment).addToBackStack(null).commit();
-//        }
 
         if (findViewById(R.id.fragment_container) != null) { //not tablet
             getSupportFragmentManager().popBackStackImmediate();
 
+            MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentByTag("main_f");
+            fragment.handleItemPick(itemPicked);
+        }
+        else {
             MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentByTag("main_f");
             fragment.handleItemPick(itemPicked);
         }
@@ -77,8 +74,13 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
 
     @Override
     public void changeItemMenu(){
-        if (send_order_button != null){
+        if (findViewById(R.id.fragment_container) != null) { //not tablet
             send_order_button.setVisible(!send_order_button.isVisible());
+        }
+        else {
+//            if (send_order_button != null) {
+//                send_order_button.setVisible(!send_order_button.isVisible());
+//            }
         }
 
     }
@@ -122,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         getMenuInflater().inflate(R.menu.menu_item, menu);
         send_order_button = menu.findItem(R.id.send_order_menu_button); //menu.getItem(0);
         send_order_button.setEnabled(false);
-        //checkButtonValid();
+        //TODO://checkButtonValid();
+        MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentByTag("main_f");
+        fragment.checkButtonValid();
         return true;
     }
 

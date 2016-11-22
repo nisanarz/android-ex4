@@ -173,7 +173,7 @@ public class MainFragment extends Fragment {
         });
     }
 
-    private void checkButtonValid(){
+    public void checkButtonValid(){
         if (foodCheckbox.isChecked() && checkEditTextInput(numInputText)){
             mCallback.checkAndSetMenuButton(foodCheckbox.isChecked(),checkEditTextInput(numInputText));
             orderButton.setEnabled(true);
