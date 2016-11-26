@@ -73,9 +73,26 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
     }
 
     @Override
-    public void changeItemMenu(){
+    public void visibleItemMenu(){
         if (findViewById(R.id.fragment_container) != null) { //not tablet
-            send_order_button.setVisible(!send_order_button.isVisible());
+            if (send_order_button != null) {
+                send_order_button.setVisible(true);
+            }
+        }
+        else {
+//            if (send_order_button != null) {
+//                send_order_button.setVisible(!send_order_button.isVisible());
+//            }
+        }
+
+    }
+
+    @Override
+    public void invisibleItemMenu(){
+        if (findViewById(R.id.fragment_container) != null) { //not tablet
+            if (send_order_button != null) {
+                send_order_button.setVisible(false);
+            }
         }
         else {
 //            if (send_order_button != null) {
@@ -126,7 +143,14 @@ public class MainActivity extends AppCompatActivity implements MainFragment.OnFr
         send_order_button.setEnabled(false);
         //TODO://checkButtonValid();
         MainFragment fragment = (MainFragment) getSupportFragmentManager().findFragmentByTag("main_f");
-        fragment.checkButtonValid();
+        if (fragment.isVisible()){
+            fragment.checkButtonValid();
+        }
+        else {
+            invisibleItemMenu();
+        }
+
+
         return true;
     }
 

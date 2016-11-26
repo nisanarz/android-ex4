@@ -19,7 +19,8 @@ public class FoodSelectFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         public void itemPicked(String itemPicked);
-        public void changeItemMenu();
+        public void visibleItemMenu();
+        public void invisibleItemMenu();
     }
 
     private OnFragmentInteractionListener mCallback;
@@ -48,7 +49,7 @@ public class FoodSelectFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof FoodSelectFragment.OnFragmentInteractionListener) {
             mCallback = (FoodSelectFragment.OnFragmentInteractionListener) context;
-            mCallback.changeItemMenu();
+            mCallback.invisibleItemMenu();
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -56,9 +57,15 @@ public class FoodSelectFragment extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+
+    }
+
+    @Override
     public void onStop(){
         super.onStop();
-        mCallback.changeItemMenu();
+        mCallback.visibleItemMenu();
     }
 
     @Override
